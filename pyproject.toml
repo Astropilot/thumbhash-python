@@ -1,0 +1,104 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "thumbhash"
+description = 'A Python implementation of the Thumbhash image placeholder generation algorithm.'
+readme = "README.md"
+requires-python = ">=3.7"
+license = "MIT"
+authors = [
+  { name = "Yohann MARTIN", email = "contact@codexus.fr" },
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development :: Libraries :: Application Frameworks",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Software Development",
+  "Typing :: Typed",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = []
+dynamic = ["version"]
+
+[project.urls]
+Documentation = "https://github.com/Astropilot/thumbhash-python#readme"
+Issues = "https://github.com/Astropilot/thumbhash-python/issues"
+Source = "https://github.com/Astropilot/thumbhash-python"
+
+[project.optional-dependencies]
+test = [
+  "pytest >=7.1.3,<8.0.0",
+  "coverage[toml] >= 6.5.0,< 8.0"
+]
+dev = [
+  "mypy ==1.1.1",
+  "ruff ==0.0.257",
+  "black ==23.1.0",
+  "isort >=5.0.6,<6.0.0",
+  "devtools[pygments] ==0.10.0"
+]
+
+[tool.hatch.version]
+path = "thumbhash/__version__.py"
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+  "/.github",
+  "/.vscode",
+]
+
+[tool.isort]
+profile = "black"
+known_third_party = ["thumbhash", "pydantic", "Cryptodome", "nacl", "responses"]
+
+[tool.mypy]
+strict = true
+
+[tool.coverage.run]
+parallel = true
+source = [
+    "tests",
+    "thumbhash"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[tool.ruff]
+target-version = "py37"
+select = [
+  "E",  # pycodestyle errors
+  "W",  # pycodestyle warnings
+  "F",  # pyflakes
+  # "I",  # isort
+  "C",  # flake8-comprehensions
+  "B",  # flake8-bugbear
+]
+ignore = [
+  "E501",  # line too long, handled by black
+  "B008",  # do not perform function calls in argument defaults
+  "C901",  # too complex
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[tool.ruff.isort]
+known-third-party = ["thumbhash"]
