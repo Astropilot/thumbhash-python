@@ -1,6 +1,6 @@
 #!/bin/sh -e
 set -x
 
-ruff check infisical tests --fix
-black infisical tests
-isort infisical tests
+ruff check thumbhash tests --fix
+black thumbhash tests
+isort thumbhash tests

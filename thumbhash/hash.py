@@ -114,7 +114,7 @@ class Hash:
     @staticmethod
     def decode(hash: bytes, saturation_boost: float) -> "Hash":
         if len(hash) < 5:
-            raise ValueError("Invalid hash!")
+            raise ValueError("Invalid size hash! Must be at least 5 bytes")
 
         # First block
         header24 = int(hash[0]) | int(hash[1]) << 8 | int(hash[2]) << 16
@@ -142,7 +142,7 @@ class Hash:
 
         if has_alpha:
             if len(hash) < 6:
-                raise ValueError("Invalid hash")
+                raise ValueError("Invalid size hash! Must be at least 6 bytes")
             a_dc = float(hash[5] & 15) / 15.0
             a_scale = float(hash[5] >> 4) / 15.0
 
@@ -159,7 +159,7 @@ class Hash:
                 while cx * ny < nx * (ny - cy):
                     hidx = start + math.floor(idx / 2)
                     if hidx >= len(hash):
-                        raise ValueError("")
+                        raise ValueError("Invalid size hash!")
 
                     f = (
                         float((hash[hidx] >> ((idx & 1) * 4)) & 15) / 7.5 - 1.0

@@ -30,7 +30,10 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
-dependencies = []
+dependencies = [
+  "Pillow >=8.0.0,<10.0.0",
+  "typer[all] ==0.7.0"
+]
 dynamic = ["version"]
 
 [project.urls]
@@ -62,7 +65,7 @@ exclude = [
 
 [tool.isort]
 profile = "black"
-known_third_party = ["thumbhash", "pydantic", "Cryptodome", "nacl", "responses"]
+known_third_party = ["thumbhash", "typer"]
 
 [tool.mypy]
 strict = true

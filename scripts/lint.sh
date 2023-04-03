@@ -3,7 +3,7 @@
 set -e
 set -x
 
-mypy infisical
-ruff check infisical tests
-black infisical tests --check
-isort infisical tests --check-only
+mypy thumbhash
+ruff check thumbhash tests
+black thumbhash tests --check
+isort thumbhash tests --check-only

@@ -1,6 +1,18 @@
-from typing import List, Tuple
+from base64 import b64decode
+from typing import List, Tuple, Union
 
+from PIL import Image
 from thumbhash.hash import Hash
+
+
+def thumbhash_to_image(
+    hash: Union[bytes, str], base_size: int = 32, saturation_boost: float = 1.25
+) -> Image.Image:
+    hash = b64decode(hash) if isinstance(hash, str) else hash
+
+    width, height, rgba_data = thumbhash_to_rgba(hash, base_size, saturation_boost)
+
+    return Image.frombytes("RGBA", (width, height), bytes(rgba_data))
 
 
 def thumbhash_to_rgba(

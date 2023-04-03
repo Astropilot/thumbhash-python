@@ -1,10 +1,46 @@
 import math
-from typing import List, Sequence, Tuple
+from base64 import b64encode
+from itertools import chain
+from pathlib import Path
+from typing import BinaryIO, List, Sequence, Tuple, Union
 
+from PIL import Image
+from PIL.ImageOps import exif_transpose
 from thumbhash.hash import Hash
 
 
+def image_to_thumbhash(
+    image: Union[str, bytes, Path, BinaryIO],
+) -> str:
+    m_image = exif_transpose(Image.open(image)).convert("RGBA")
+    width, height = m_image.size
+
+    scale = 100 / max(width, height)
+
+    image_resized = m_image.resize(size=(round(width * scale), round(height * scale)))
+    m_image.close()
+
+    red_band = image_resized.getdata(band=0)
+    green_band = image_resized.getdata(band=1)
+    blue_band = image_resized.getdata(band=2)
+    alpha_band = image_resized.getdata(band=3)
+    rgb_data = list(
+        chain.from_iterable(zip(red_band, green_band, blue_band, alpha_band))
+    )
+    width, height = image_resized.size
+    image_resized.close()
+
+    hash = rgba_to_thumbhash(width, height, rgb_data)
+
+    return b64encode(hash).decode("utf-8")
+
+
 def rgba_to_thumbhash(w: int, h: int, rgba: Sequence[int]) -> bytes:
+    if w > 100 or h > 100:
+        raise ValueError(f"{w}x{h} doesn't fit in 100x100")
+    if len(rgba) != w * h * 4:
+        raise ValueError("Image data does not fit the given size")
+
     nb_pixels = w * h
     is_landscape = w > h
     avg_r = 0.0
