@@ -13,22 +13,18 @@ def image_to_thumbhash(
     image: Union[str, bytes, Path, BinaryIO],
 ) -> str:
     m_image = exif_transpose(Image.open(image)).convert("RGBA")
-    width, height = m_image.size
 
-    scale = 100 / max(width, height)
+    m_image.thumbnail((100, 100))
 
-    image_resized = m_image.resize(size=(round(width * scale), round(height * scale)))
-    m_image.close()
-
-    red_band = image_resized.getdata(band=0)
-    green_band = image_resized.getdata(band=1)
-    blue_band = image_resized.getdata(band=2)
-    alpha_band = image_resized.getdata(band=3)
+    red_band = m_image.getdata(band=0)
+    green_band = m_image.getdata(band=1)
+    blue_band = m_image.getdata(band=2)
+    alpha_band = m_image.getdata(band=3)
     rgb_data = list(
         chain.from_iterable(zip(red_band, green_band, blue_band, alpha_band))
     )
-    width, height = image_resized.size
-    image_resized.close()
+    width, height = m_image.size
+    m_image.close()
 
     hash = rgba_to_thumbhash(width, height, rgb_data)
 

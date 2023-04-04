@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "thumbhash"
+name = "thumbhash-python"
 description = 'A Python implementation of the Thumbhash image placeholder generation algorithm.'
 readme = "README.md"
 requires-python = ">=3.7"
@@ -56,6 +56,9 @@ dev = [
   "types-Pillow >=9.0.0"
 ]
 
+[project.scripts]
+thumbhash = "thumbhash.cli:main"
+
 [tool.hatch.version]
 path = "thumbhash/__version__.py"
 
@@ -63,6 +66,7 @@ path = "thumbhash/__version__.py"
 exclude = [
   "/.github",
   "/.vscode",
+  "/scripts"
 ]
 
 [tool.isort]
@@ -107,3 +111,8 @@ ignore = [
 
 [tool.ruff.isort]
 known-third-party = ["thumbhash"]
+
+[tool.pyright]
+reportUnknownMemberType=false
+reportUnknownVariableType=false
+reportUnknownArgumentType=false
