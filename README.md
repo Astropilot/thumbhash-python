@@ -2,10 +2,6 @@
     <br>
     ThumbHash for Python
 </h1>
-<p align="center">
-  <p align="center">Open-source, end-to-end encrypted tool to manage secrets and configs across your team, devices, and infrastructure.</p>
-</p>
-
 
 <p align="center">
 <a href="https://github.com/Astropilot/thumbhash-python/actions?query=workflow%3ATest+event%3Apush+branch%3Amain" target="_blank">
