@@ -9,13 +9,10 @@ from PIL.ImageOps import exif_transpose
 from thumbhash.hash import Hash
 
 
-def image_to_thumbhash(
-    image: Union[str, bytes, Path, BinaryIO],
-) -> str:
-    return pil_image_to_thumbhash(Image.open(image))
+def image_to_thumbhash(image: Union[str, bytes, Path, BinaryIO, Image.Image]) -> str:
+    if not isinstance(image, Image.Image):
+        image = Image.open(image)
 
-
-def pil_image_to_thumbhash(image: Image.Image) -> str:
     m_image = exif_transpose(image).convert("RGBA")
 
     m_image.thumbnail((100, 100))
