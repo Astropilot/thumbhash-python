@@ -12,7 +12,11 @@ from thumbhash.hash import Hash
 def image_to_thumbhash(
     image: Union[str, bytes, Path, BinaryIO],
 ) -> str:
-    m_image = exif_transpose(Image.open(image)).convert("RGBA")
+    return pil_image_to_thumbhash(Image.open(image))
+
+
+def pil_image_to_thumbhash(image: Image.Image) -> str:
+    m_image = exif_transpose(image).convert("RGBA")
 
     m_image.thumbnail((100, 100))
 
