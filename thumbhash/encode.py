@@ -9,7 +9,9 @@ from PIL.ImageOps import exif_transpose
 from thumbhash.hash import Hash
 
 
-def image_to_thumbhash(image: Union[str, bytes, Path, BinaryIO, Image.Image]) -> str:
+def image_to_thumbhash(
+    image: Union[str, bytes, Path, BinaryIO, Image.Image],
+) -> str:
     if not isinstance(image, Image.Image):
         image = Image.open(image)
 
