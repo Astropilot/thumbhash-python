@@ -10,9 +10,12 @@ from thumbhash.hash import Hash
 
 
 def image_to_thumbhash(
-    image: Union[str, bytes, Path, BinaryIO],
+    image: Union[str, bytes, Path, BinaryIO, Image.Image],
 ) -> str:
-    m_image = exif_transpose(Image.open(image)).convert("RGBA")
+    if not isinstance(image, Image.Image):
+        image = Image.open(image)
+
+    m_image = exif_transpose(image).convert("RGBA")
 
     m_image.thumbnail((100, 100))
 
