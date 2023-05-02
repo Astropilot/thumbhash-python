@@ -32,7 +32,7 @@ classifiers = [
 ]
 dependencies = [
   "Pillow >=8.0.0,<10.0.0",
-  "typer[all] ==0.7.0"
+  "typer[all] ==0.8.0"
 ]
 dynamic = ["version"]
 
