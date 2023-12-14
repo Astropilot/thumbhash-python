@@ -1,16 +1,15 @@
 {
-  "python.linting.enabled": true,
-  "python.formatting.provider": "black",
-  "editor.formatOnSave": true,
-  "python.linting.mypyEnabled": true,
   "[python]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.codeActionsOnSave": {
-      "source.organizeImports": true
+      "source.organizeImports.ruff": "explicit"
     }
   },
-  "ruff.organizeImports": false,
   "ruff.fixAll": false,
   "ruff.importStrategy": "fromEnvironment",
-  "autoDocstring.docstringFormat": "sphinx-notypes",
-  "python.analysis.typeCheckingMode": "strict"
+  "python.analysis.typeCheckingMode": "strict",
+  "mypy.runUsingActiveInterpreter": true,
+  "ruff.lint.args": ["--extend-exclude=/**/site-packages/**/*.py"],
+  "autoDocstring.docstringFormat": "sphinx-notypes"
 }

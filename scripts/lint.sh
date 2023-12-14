@@ -5,5 +5,3 @@ set -x
 
 mypy thumbhash
 ruff check thumbhash tests
-black thumbhash tests --check
-isort thumbhash tests --check-only

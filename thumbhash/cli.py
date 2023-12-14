@@ -18,7 +18,7 @@ def encode(
         dir_okay=False,
         readable=True,
         resolve_path=True,
-    )
+    ),
 ) -> None:
     """
     Get thumbhash from image

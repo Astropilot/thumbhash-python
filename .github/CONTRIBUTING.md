@@ -1,7 +1,7 @@
 Start by cloning the repository:
 ```console
-$ git clone https://github.com/Infisical/infisical-python
-$ cd infisical-python
+$ git clone https://github.com/Astropilot/thumbhash-python
+$ cd thumbhash-python
 ```
 
 We recommand that you create a virtual environment:

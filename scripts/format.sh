@@ -2,5 +2,4 @@
 set -x
 
 ruff check thumbhash tests --fix
-black thumbhash tests
-isort thumbhash tests
+ruff format thumbhash tests
