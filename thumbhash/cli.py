@@ -1,9 +1,12 @@
+from base64 import b64encode
+import io
 from pathlib import Path
 from typing import Any
 
 import typer
 from rich import print
 from thumbhash import image_to_thumbhash, thumbhash_to_image
+from typing_extensions import Annotated
 
 app = typer.Typer()
 
@@ -32,10 +35,9 @@ def encode(
 def decode(
     image_path: Path = typer.Argument(
         ...,
-        help="The path where the image created from the hash will be saved",
+        help="The path where the image created from the hash will be saved, '-' for stdout (base64)",
         file_okay=True,
         dir_okay=False,
-        resolve_path=True,
     ),
     hash: str = typer.Argument(..., help="The base64-encoded thumbhash"),
     size: int = typer.Option(
@@ -48,7 +50,12 @@ def decode(
     """
     image = thumbhash_to_image(hash, size, saturation)
 
-    image.save(image_path)
+    if f"{image_path}" == "-":
+        b = io.BytesIO()
+        image.save(b, "png")
+        print(f"PNG (base64): [green]{b64encode(b.getvalue()).decode('utf-8')}[/green]")
+    else:
+        image.save(image_path)
 
 
 def main() -> Any:
