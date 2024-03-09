@@ -47,7 +47,7 @@ Source = "https://github.com/Astropilot/thumbhash-python"
 dev = [
   "types-Pillow >=10.0.0",
 
-  "mypy ==1.7.1",
+  "mypy ==1.9.0",
   "ruff ==0.1.8",
   "devtools[pygments] ==0.12.2",
   "pytest >=7.1.3,<8.0.0",
