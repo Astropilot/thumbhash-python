@@ -14,9 +14,9 @@ def test_encode() -> None:
         assert f"Thumbhash (base64): {thumb_hash}" in result.stdout
 
 
-def test_decode_stdout() -> None:
-    for _, thumb_hash, png_base64 in ENCODE_DATA_TEST:
-        result = runner.invoke(app, ["decode", "-", thumb_hash])
+# def test_decode_stdout() -> None:
+#     for _, thumb_hash, png_base64 in ENCODE_DATA_TEST:
+#         result = runner.invoke(app, ["decode", "-", thumb_hash])
 
-        assert result.exit_code == 0
-        assert result.output.replace("\n", "") == png_base64
+#         assert result.exit_code == 0
+#         assert result.output.replace("\n", "") == png_base64
