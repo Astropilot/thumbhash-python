@@ -113,7 +113,7 @@ $ thumbhash decode [OPTIONS] IMAGE_PATH HASH
 
 **Arguments**:
 
-* `IMAGE_PATH`: The path where the image created from the hash will be saved  [required]
+* `IMAGE_PATH`: The path where the image created from the hash will be saved, '-' for stdout (png base64)  [required]
 * `HASH`: The base64-encoded thumbhash  [required]
 
 **Options**:

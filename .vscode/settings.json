@@ -3,13 +3,11 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.codeActionsOnSave": {
-      "source.organizeImports.ruff": "explicit"
+      "source.organizeImports.ruff": "always"
     }
   },
   "ruff.fixAll": false,
   "ruff.importStrategy": "fromEnvironment",
   "python.analysis.typeCheckingMode": "strict",
-  "mypy.runUsingActiveInterpreter": true,
-  "ruff.lint.args": ["--extend-exclude=/**/site-packages/**/*.py"],
   "autoDocstring.docstringFormat": "sphinx-notypes"
 }

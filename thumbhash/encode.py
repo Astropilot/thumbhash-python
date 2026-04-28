@@ -1,16 +1,18 @@
 import math
 from base64 import b64encode
+from collections.abc import Sequence
 from itertools import chain
 from pathlib import Path
-from typing import BinaryIO, List, Sequence, Tuple, Union
+from typing import BinaryIO
 
 from PIL import Image
 from PIL.ImageOps import exif_transpose
+
 from thumbhash.hash import Hash
 
 
 def image_to_thumbhash(
-    image: Union[str, bytes, Path, BinaryIO, Image.Image],
+    image: str | bytes | Path | BinaryIO | Image.Image,
 ) -> str:
     if not isinstance(image, Image.Image):
         image = Image.open(image)
@@ -19,17 +21,19 @@ def image_to_thumbhash(
 
     m_image.thumbnail((100, 100))
 
-    red_band = m_image.getdata(band=0)
-    green_band = m_image.getdata(band=1)
-    blue_band = m_image.getdata(band=2)
-    alpha_band = m_image.getdata(band=3)
+    red_band = m_image.get_flattened_data(band=0)
+    green_band = m_image.get_flattened_data(band=1)
+    blue_band = m_image.get_flattened_data(band=2)
+    alpha_band = m_image.get_flattened_data(band=3)
     rgb_data = list(
-        chain.from_iterable(zip(red_band, green_band, blue_band, alpha_band))
+        chain.from_iterable(
+            zip(red_band, green_band, blue_band, alpha_band, strict=True)
+        )
     )
     width, height = m_image.size
     m_image.close()
 
-    hash = rgba_to_thumbhash(width, height, rgb_data)
+    hash = rgba_to_thumbhash(width, height, rgb_data)  # type: ignore
 
     return b64encode(hash).decode("utf-8")
 
@@ -64,10 +68,10 @@ def rgba_to_thumbhash(w: int, h: int, rgba: Sequence[int]) -> bytes:
     max_wh = max(w, h)
     lx = max(1, round((l_limit * w) / max_wh))
     ly = max(1, round((l_limit * h) / max_wh))
-    l_channel: List[float] = [0.0] * nb_pixels
-    p_channel: List[float] = [0.0] * nb_pixels
-    q_channel: List[float] = [0.0] * nb_pixels
-    a_channel: List[float] = [0.0] * nb_pixels
+    l_channel: list[float] = [0.0] * nb_pixels
+    p_channel: list[float] = [0.0] * nb_pixels
+    q_channel: list[float] = [0.0] * nb_pixels
+    a_channel: list[float] = [0.0] * nb_pixels
 
     for i in range(nb_pixels):
         alpha = float(rgba[i * 4 + 3]) / 255.0
@@ -82,12 +86,12 @@ def rgba_to_thumbhash(w: int, h: int, rgba: Sequence[int]) -> bytes:
         a_channel[i] = alpha
 
     def encode_channel(
-        channel: List[float], nx: int, ny: int
-    ) -> Tuple[float, List[float], float]:
+        channel: list[float], nx: int, ny: int
+    ) -> tuple[float, list[float], float]:
         dc = 0.0
-        ac: List[float] = []
+        ac: list[float] = []
         scale = 0.0
-        fx: List[float] = [0.0] * w
+        fx: list[float] = [0.0] * w
 
         for cy in range(ny):
             cyf = float(cy)

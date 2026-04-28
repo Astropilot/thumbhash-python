@@ -1,6 +1,5 @@
 import math
 from dataclasses import dataclass
-from typing import List, Tuple
 
 # Hash binary representation:
 #
@@ -46,10 +45,10 @@ class Hash:
     a_dc: float  # if has_alpha
     a_scale: float  # if has_alpha
 
-    l_ac: List[float]
-    p_ac: List[float]
-    q_ac: List[float]
-    a_ac: List[float]  # if has_alpha
+    l_ac: list[float]
+    p_ac: list[float]
+    q_ac: list[float]
+    a_ac: list[float]  # if has_alpha
 
     def encode(self) -> bytes:
         # Compute the size of the hash
@@ -93,7 +92,7 @@ class Hash:
         if self.has_alpha:
             hash[5] = round(15.0 * self.a_dc) | (round(15.0 * self.a_scale) << 4)
 
-        acs: List[List[float]] = [self.l_ac, self.p_ac, self.q_ac]
+        acs: list[list[float]] = [self.l_ac, self.p_ac, self.q_ac]
         if self.has_alpha:
             acs.append(self.a_ac)
 
@@ -149,8 +148,8 @@ class Hash:
         start = 6 if has_alpha else 5
         idx = 0
 
-        def decode_channel(nx: int, ny: int, scale: float) -> List[float]:
-            ac: List[float] = []
+        def decode_channel(nx: int, ny: int, scale: float) -> list[float]:
+            ac: list[float] = []
             nonlocal idx
 
             for cy in range(ny):
@@ -197,7 +196,7 @@ class Hash:
             a_ac=a_ac,
         )
 
-    def size(self, base_size: int) -> Tuple[int, int]:
+    def size(self, base_size: int) -> tuple[int, int]:
         ratio = float(self.lx) / float(self.ly)
 
         if ratio > 1.0:
@@ -207,20 +206,20 @@ class Hash:
 
     def coefficients(
         self, x: int, y: int, w: int, h: int
-    ) -> Tuple[List[float], List[float]]:
+    ) -> tuple[list[float], list[float]]:
         xf, yf, wf, hf = float(x), float(y), float(w), float(h)
 
         n = 5 if self.has_alpha else 3
         n = max(self.lx, n)
 
-        fx: List[float] = [0.0] * n
+        fx: list[float] = [0.0] * n
         for cx in range(n):
             fx[cx] = math.cos(math.pi / wf * (xf + 0.5) * float(cx))
 
         n = 5 if self.has_alpha else 3
         n = max(self.ly, n)
 
-        fy: List[float] = [0.0] * n
+        fy: list[float] = [0.0] * n
         for cy in range(n):
             fy[cy] = math.cos(math.pi / hf * (yf + 0.5) * float(cy))
 

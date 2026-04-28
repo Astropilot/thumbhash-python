@@ -1,12 +1,12 @@
 from base64 import b64decode
-from typing import List, Tuple, Union
 
 from PIL import Image
+
 from thumbhash.hash import Hash
 
 
 def thumbhash_to_image(
-    hash: Union[bytes, str], base_size: int = 32, saturation_boost: float = 1.25
+    hash: bytes | str, base_size: int = 32, saturation_boost: float = 1.25
 ) -> Image.Image:
     hash = b64decode(hash) if isinstance(hash, str) else hash
 
@@ -17,13 +17,13 @@ def thumbhash_to_image(
 
 def thumbhash_to_rgba(
     hash: bytes, base_size: int = 32, saturation_boost: float = 1.25
-) -> Tuple[int, int, List[int]]:
+) -> tuple[int, int, list[int]]:
     hash_decoded = Hash.decode(hash, saturation_boost)
 
     w, h = hash_decoded.size(base_size)
 
     idx = 0
-    data: List[int] = [0] * (w * h * 4)
+    data: list[int] = [0] * (w * h * 4)
 
     for y in range(h):
         for x in range(w):
