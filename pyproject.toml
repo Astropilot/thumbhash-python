@@ -112,8 +112,9 @@ ignore = [
 ]
 
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
+"tests/**.py" = ["S101"]
 
 [tool.ruff.format]
 line-ending = "lf"
