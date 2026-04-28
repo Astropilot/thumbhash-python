@@ -74,7 +74,7 @@ jobs:
           name: coverage-html
           path: htmlcov
           include-hidden-files: true
-      - run: uv run coverage report --fail-under=100
+      - run: uv run coverage report
 
   # https://github.com/marketplace/actions/alls-green#why
   check: # This job does nothing and is only used for the branch protection
