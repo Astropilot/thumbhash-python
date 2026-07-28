@@ -55,7 +55,7 @@ Issues = "https://github.com/Astropilot/thumbhash-python/issues"
 Source = "https://github.com/Astropilot/thumbhash-python"
 
 [build-system]
-requires = ["uv_build>=0.11.8,<0.12.0"]
+requires = ["uv_build>=0.11.8,<0.13.0"]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]
